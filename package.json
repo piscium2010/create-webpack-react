@@ -1,0 +1,27 @@
+{
+  "name": "webpack-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "webpack-cli": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/piscium2010/webpack-cli.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.11.0",
+    "cross-spawn": "^5.1.0"
+  },
+  "bugs": {
+    "url": "https://github.com/piscium2010/webpack-cli/issues"
+  },
+  "homepage": "https://github.com/piscium2010/webpack-cli#readme"
+}
