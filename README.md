@@ -1,11 +1,11 @@
-# create-webpack-cli 
+# create-webpack-react
 
-## install
+## Install
 ```sh
 npm i create-webpack-react -g
 ```
 
-## usage
+## Usage
 ```sh
 create-webpack-react demo
 cd demo
