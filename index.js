@@ -49,7 +49,7 @@ const originalWorkingDir = process.cwd();
 process.chdir(projectName);
 
 const packages = ['react','react-dom','prop-types'];
-const devPackages = ['babel-core','babel-loader','babel-preset-es2015','babel-preset-react','babel-preset-stage-3','webpack','webpack-dev-server','file-loader','style-loader','css-loader','less','less-loader','html-webpack-plugin'];
+const devPackages = ['babel-core','babel-loader','babel-preset-env','babel-preset-react','babel-preset-stage-2','webpack','webpack-cli','webpack-dev-server','file-loader','style-loader','css-loader','less','less-loader','html-webpack-plugin'];
 const command = shouldUseYarn()? 'yarn':'npm';
 
 init().then(function(){

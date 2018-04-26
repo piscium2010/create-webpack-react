@@ -24,7 +24,7 @@ module.exports = {
             exclude: /node_modules/,
             loader : 'babel-loader',
             options : {
-              presets: ["es2015", "stage-3","react"]
+              presets: ["env", "stage-2","react"]
             }
           },
           {
