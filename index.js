@@ -32,6 +32,7 @@ mkDir(targetSrcDir);
 mkDir(targetPublicDir);
 
 copyFile(path.join(templatesDir,'webpack.config.js'),path.join(targetDir,'webpack.config.js'));
+copyFile(path.join(templatesDir,'.babelrc'),path.join(targetDir,'.babelrc'));
 copyFile(path.join(templateSrcDir,'app.jsx'),path.join(targetSrcDir,'app.jsx'));
 copyFile(path.join(templateSrcDir,'index.jsx'),path.join(targetSrcDir,'index.jsx'));
 
@@ -49,7 +50,7 @@ const originalWorkingDir = process.cwd();
 process.chdir(projectName);
 
 const packages = ['react','react-dom','prop-types'];
-const devPackages = ['babel-core','babel-loader','babel-preset-env','babel-preset-react','babel-preset-stage-2','webpack','webpack-cli','webpack-dev-server','file-loader','style-loader','css-loader','less','less-loader','html-webpack-plugin'];
+const devPackages = ['@babel/core','babel-loader','@babel/preset-react','webpack','webpack-cli','webpack-dev-server','file-loader','style-loader','css-loader','less','less-loader','html-webpack-plugin'];
 const command = shouldUseYarn()? 'yarn':'npm';
 
 init().then(function(){

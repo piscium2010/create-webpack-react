@@ -23,9 +23,6 @@ module.exports = {
             test : /\.jsx?/,
             exclude: /node_modules/,
             loader : 'babel-loader',
-            options : {
-              presets: ["env", "stage-2","react"]
-            }
           },
           {
             test: /\.(png|jpg|gif|woff2)$/,
