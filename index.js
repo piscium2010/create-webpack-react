@@ -78,7 +78,7 @@ init().then(function () {
 });
 
 function copyFile(source, target) {
-    fs.createReadStream(source).pipe(fs.createWriteStream(target));
+    fs.createReadStream(source).pipe(fs.createWriteStream(target, {flags: 'w+'}));
 }
 
 function editPackageJson() {
