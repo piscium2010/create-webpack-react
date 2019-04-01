@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 var projectName;
 var program = require('commander');
 
@@ -17,7 +16,6 @@ if (typeof projectName === 'undefined') {
 
 const fs = require('fs');
 const path = require('path');
-const exec = require('child_process').execSync;
 const spawn = require('cross-spawn');
 
 const targetDir = projectName;
@@ -31,45 +29,45 @@ mkDir(projectName);
 mkDir(targetSrcDir);
 mkDir(targetPublicDir);
 
-copyFile(path.join(templatesDir, 'webpack.config.js'), path.join(targetDir, 'webpack.config.js'));
+copyFile(path.join(templatesDir, 'webpack.common.js'), path.join(targetDir, 'webpack.common.js'));
+copyFile(path.join(templatesDir, 'webpack.dev.js'), path.join(targetDir, 'webpack.dev.js'));
+copyFile(path.join(templatesDir, 'webpack.prod.js'), path.join(targetDir, 'webpack.prod.js'));
+copyFile(path.join(templatesDir, 'index.html'), path.join(targetDir, 'index.html'));
 copyFile(path.join(templatesDir, '.babelrc'), path.join(targetDir, '.babelrc'));
 copyFile(path.join(templateSrcDir, 'app.jsx'), path.join(targetSrcDir, 'app.jsx'));
-copyFile(path.join(templateSrcDir, 'index.jsx'), path.join(targetSrcDir, 'index.jsx'));
+copyFile(path.join(templateSrcDir, 'app.less'), path.join(targetSrcDir, 'app.less'));
 
-function mkDir(dir) {
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir)
-    }
-}
-
-function copyFile(source, target) {
-    fs.createReadStream(source).pipe(fs.createWriteStream(target));
-}
-
-const originalWorkingDir = process.cwd();
 process.chdir(projectName);
 
-const packages = ['react', 'react-dom', 'prop-types'];
+const packages = ['react', 'react-dom', 'react-router-dom'];
 const devPackages = [
-    '@babel/core',
-    '@babel/plugin-syntax-object-rest-spread',
-    '@babel/plugin-proposal-class-properties',
-    'babel-loader',
-    '@babel/preset-react',
-    'webpack',
-    'webpack-cli',
-    'webpack-dev-server',
-    'file-loader',
-    'style-loader',
-    'css-loader',
-    'less',
-    'less-loader',
-    'html-webpack-plugin'
+    "@babel/cli",
+    "@babel/core",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-syntax-object-rest-spread",
+    "@babel/preset-react",
+    "babel-loader",
+    "clean-webpack-plugin",
+    "css-loader",
+    "file-loader",
+    "html-loader",
+    "html-webpack-plugin",
+    "less",
+    "less-loader",
+    "less-plugin-clean-css",
+    "mini-css-extract-plugin",
+    "optimize-css-assets-webpack-plugin",
+    "style-loader",
+    "terser-webpack-plugin",
+    "url-loader",
+    "webpack",
+    "webpack-cli",
+    "webpack-dev-server",
+    "webpack-merge"
 ];
-const command = shouldUseYarn() ? 'yarn' : 'npm';
 
 init().then(function () {
-    return install(packages);
+    return install(packages, '-S');
 }).then(function () {
     return install(devPackages, '-D');
 }).then(function () {
@@ -78,6 +76,19 @@ init().then(function () {
     console.log(err);
     process.exit(1);
 });
+
+function copyFile(source, target) {
+    fs.createReadStream(source).pipe(fs.createWriteStream(target));
+}
+
+function editPackageJson() {
+    let f = fs.readFileSync('package.json');
+    let json = JSON.parse(f);
+    json.scripts.start = 'webpack --config webpack.dev.js && webpack-dev-server --config webpack.dev.js --open';
+    json.scripts.build = 'webpack --config webpack.prod.js';
+    delete json.main
+    fs.writeFileSync('package.json', JSON.stringify(json, null, '\t'));
+}
 
 function init() {
     return new Promise((resolve, reject) => {
@@ -90,28 +101,13 @@ function init() {
 
 function install(packages, option) {
     return new Promise((resolve, reject) => {
-        let add = option ? ['add', option] : ['add'];
+        let add = option ? ['install', option] : ['install'];
         let args = add.concat(packages);
-        var child = spawn('yarn', args, { stdio: 'inherit' });
+        var child = spawn('npm', args, { stdio: 'inherit' });
         child.on('close', function (code) {
             code === 0 ? resolve() : reject();
         })
     });
 }
 
-function editPackageJson() {
-    let f = fs.readFileSync('package.json');
-    let json = JSON.parse(f);
-    json.scripts.start = 'webpack && webpack-dev-server --open';
-    fs.writeFileSync('package.json', JSON.stringify(json));
-}
-
-function shouldUseYarn() {
-    try {
-        // exec('yarnpkg --version', { stdio: 'ignore' });
-        // return true;
-        return false
-    } catch (e) {
-        return false;
-    }
-}
+function mkDir(dir) { if (!fs.existsSync(dir)) { fs.mkdirSync(dir) } }

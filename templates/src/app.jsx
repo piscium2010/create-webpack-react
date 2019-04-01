@@ -1,7 +1,18 @@
-import React from 'react';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import './app.less'
 
-export default class App extends React.Component {
+class App extends React.Component {
     render() {
-        return <div>Hello React</div>
+        return (
+            <Router>
+                <React.Fragment>
+                    <Route path='/' exact component={() => (<div>Hello React</div>)} />
+                </React.Fragment>
+            </Router >
+        )
     }
 }
+
+ReactDOM.render(<App />, document.getElementById('app'))
