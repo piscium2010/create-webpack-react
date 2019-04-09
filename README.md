@@ -1,5 +1,7 @@
 # create-webpack-react
 
+Integrate react react-router and webpack
+
 ## Install
 ```sh
 npm i create-webpack-react -g
