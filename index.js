@@ -14,7 +14,7 @@ if (typeof projectName === 'undefined') {
     process.exit(1);
 }
 
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const spawn = require('cross-spawn');
 
@@ -34,8 +34,15 @@ copyFile(path.join(templatesDir, 'webpack.dev.js'), path.join(targetDir, 'webpac
 copyFile(path.join(templatesDir, 'webpack.prod.js'), path.join(targetDir, 'webpack.prod.js'));
 copyFile(path.join(templatesDir, 'index.html'), path.join(targetDir, 'index.html'));
 copyFile(path.join(templatesDir, '.babelrc'), path.join(targetDir, '.babelrc'));
-copyFile(path.join(templateSrcDir, 'app.jsx'), path.join(targetSrcDir, 'app.jsx'));
-copyFile(path.join(templateSrcDir, 'app.less'), path.join(targetSrcDir, 'app.less'));
+// copyFile(path.join(templateSrcDir, 'app.jsx'), path.join(targetSrcDir, 'app.jsx'));
+// copyFile(path.join(templateSrcDir, 'app.less'), path.join(targetSrcDir, 'app.less'));
+try {
+    fs.copySync(templateSrcDir, targetSrcDir)
+    console.log('success!')
+} catch (err) {
+    console.error(err)
+}
+
 
 process.chdir(projectName);
 
@@ -78,7 +85,7 @@ init().then(function () {
 });
 
 function copyFile(source, target) {
-    fs.createReadStream(source).pipe(fs.createWriteStream(target, {flags: 'w+'}));
+    fs.createReadStream(source).pipe(fs.createWriteStream(target, { flags: 'w+' }));
 }
 
 function editPackageJson() {
