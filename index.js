@@ -52,6 +52,8 @@ const devPackages = [
     "@babel/core",
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-syntax-object-rest-spread",
+    "@babel/plugin-proposal-decorators",
+    "@babel/plugin-syntax-dynamic-import",
     "@babel/preset-react",
     "babel-loader",
     "clean-webpack-plugin",
