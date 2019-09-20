@@ -93,7 +93,7 @@ function copyFile(source, target) {
 function editPackageJson() {
     let f = fs.readFileSync('package.json');
     let json = JSON.parse(f);
-    json.scripts.start = 'webpack --config webpack.dev.js && webpack-dev-server --config webpack.dev.js --open';
+    json.scripts.start = 'webpack-dev-server --config webpack.dev.js --open';
     json.scripts.build = 'webpack --config webpack.prod.js';
     delete json.main
     fs.writeFileSync('package.json', JSON.stringify(json, null, '\t'));
