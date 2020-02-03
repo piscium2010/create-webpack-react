@@ -33,9 +33,8 @@ copyFile(path.join(templatesDir, 'webpack.common.js'), path.join(targetDir, 'web
 copyFile(path.join(templatesDir, 'webpack.dev.js'), path.join(targetDir, 'webpack.dev.js'));
 copyFile(path.join(templatesDir, 'webpack.prod.js'), path.join(targetDir, 'webpack.prod.js'));
 copyFile(path.join(templatesDir, 'index.html'), path.join(targetDir, 'index.html'));
-copyFile(path.join(templatesDir, '.babelrc'), path.join(targetDir, '.babelrc'));
-// copyFile(path.join(templateSrcDir, 'app.jsx'), path.join(targetSrcDir, 'app.jsx'));
-// copyFile(path.join(templateSrcDir, 'app.less'), path.join(targetSrcDir, 'app.less'));
+copyFile(path.join(templatesDir, 'babel.config.js'), path.join(targetDir, 'babel.config.js'));
+
 try {
     fs.copySync(templateSrcDir, targetSrcDir)
     console.log('success!')
@@ -55,6 +54,7 @@ const devPackages = [
     "@babel/plugin-proposal-decorators",
     "@babel/plugin-syntax-dynamic-import",
     "@babel/preset-react",
+    "@babel/preset-env",
     "babel-loader",
     "clean-webpack-plugin",
     "css-loader",
